@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <title>Фінансова Модель та Розрахунки — Meet Ecosystem (v2)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --violet: #7C3AED; --blue: #2563EB; --cyan: #06B6D4; --emerald: #10B981;
+      --amber: #F59E0B; --rose: #F43F5E;
+      --slate-50: #F8FAFC; --slate-100: #F1F5F9; --slate-300: #CBD5E1;
+      --slate-400: #94A3B8; --slate-700: #334155; --slate-800: #1E293B;
+      --slate-900: #0F172A; --slate-950: #020617;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--slate-950); color: var(--slate-300); padding: 40px; }
+    h1 { font-size: 28px; font-weight: 800; color: var(--slate-50); margin-bottom: 6px; letter-spacing: -0.02em; }
+    h2 { font-size: 20px; font-weight: 700; color: var(--slate-50); margin-bottom: 16px; }
+    h3 { font-size: 15px; font-weight: 700; color: var(--cyan); margin-bottom: 8px; }
+    p { font-size: 14px; line-height: 1.6; }
+
+    .subtitle { font-size: 14px; color: var(--slate-400); margin-bottom: 30px; }
+    .glow-line { height: 3px; border-radius: 99px; margin: 30px 0; background: linear-gradient(90deg, var(--violet), var(--blue), var(--cyan), transparent); }
+
+    .section { margin-bottom: 40px; }
+    .card { background: var(--slate-800); border: 1px solid var(--slate-700); border-radius: 16px; padding: 24px; }
+    .card-accent { background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(37,99,235,0.08)); border: 1px solid rgba(124,58,237,0.2); border-radius: 16px; padding: 24px; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+
+    .metric { text-align: center; padding: 20px; }
+    .metric .label { display: block; font-size: 11px; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; margin-bottom: 6px; }
+    .metric .value { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; color: var(--cyan); }
+    .metric .value.violet { color: var(--violet); }
+    .metric .value.emerald { color: var(--emerald); }
+    .metric .value.amber { color: var(--amber); }
+    .metric .value.rose { color: var(--rose); }
+    .metric .value.blue { color: var(--blue); }
+    .metric .note { font-size: 12px; color: var(--slate-400); margin-top: 4px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { text-align: left; color: var(--slate-400); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 14px; border-bottom: 2px solid var(--slate-700); font-weight: 700; }
+    td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--slate-300); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+    .total-row td { border-top: 2px solid var(--slate-700); font-weight: 700; color: var(--slate-50); font-size: 14px; }
+
+    .badge { display: inline-block; padding: 2px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; }
+    .badge-green { background: rgba(16,185,129,0.15); color: var(--emerald); }
+    .badge-amber { background: rgba(245,158,11,0.15); color: var(--amber); }
+    .badge-rose  { background: rgba(244,63,94,0.15); color: var(--rose); }
+    .badge-blue  { background: rgba(37,99,235,0.15); color: var(--blue); }
+    .badge-violet { background: rgba(124,58,237,0.15); color: var(--violet); }
+
+    .progress-track { height: 10px; border-radius: 99px; background: var(--slate-700); overflow: hidden; margin-top: 6px; }
+    .progress-fill  { height: 100%; border-radius: 99px; }
+
+    .formula { background: var(--slate-900); border: 1px solid var(--slate-700); padding: 14px 20px; border-radius: 10px; font-family: 'Courier New', monospace; font-size: 14px; color: var(--cyan); margin: 12px 0; white-space: pre-wrap; }
+
+    .chart-bar { display: flex; align-items: flex-end; gap: 16px; height: 220px; padding: 0 20px; }
+    .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
+    .bar { width: 100%; border-radius: 8px 8px 0 0; min-height: 8px; transition: height 0.3s; }
+    .bar-label { font-size: 11px; color: var(--slate-400); margin-top: 8px; text-align: center; }
+    .bar-value { font-size: 12px; font-weight: 700; color: var(--slate-50); margin-bottom: 6px; }
+
+    .waterfall { display: flex; gap: 3px; height: 36px; border-radius: 12px; overflow: hidden; margin-top: 10px; }
+    .wf-seg { display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; }
+
+    @media print { body { background: #fff; color: #333; } .card { border: 1px solid #ddd; } }
+  </style>
+</head>
+<body>
+
+<h1>📊 Фінансова Модель та Розрахунки</h1>
+<p class="subtitle">Meet Ecosystem · Seed Round $600K · Оновлено: Березень 2026</p>
+<div class="glow-line"></div>
+
+<!-- ═══════════════ SECTION 1: KEY METRICS ═══════════════ -->
+<div class="section">
+  <h2>1. Ключові метрики (KPI Dashboard)</h2>
+  <div class="grid-5">
+    <div class="card metric">
+      <span class="label">Seed Round</span>
+      <div class="value violet">$600K</div>
+    </div>
+    <div class="card metric">
+      <span class="label">Runway</span>
+      <div class="value emerald">18 міс</div>
+    </div>
+    <div class="card metric">
+      <span class="label">Target ARR (Y1)</span>
+      <div class="value">$684K</div>
+    </div>
+    <div class="card metric">
+      <span class="label">Take Rate</span>
+      <div class="value blue">15%</div>
+    </div>
+    <div class="card metric">
+      <span class="label">LTV:CAC</span>
+      <div class="value emerald">3.8:1</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SECTION 2: UNIT ECONOMICS ═══════════════ -->
+<div class="section">
+  <h2>2. Юніт-Економіка (Unit Economics) — одна B2C транзакція</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Формула доходу з транзакції</h3>
+      <div class="formula">Revenue per Transaction = AOV × Take Rate
+= $38 × 15%
+= <strong style="color: var(--emerald);">$5.70</strong> (~225 грн)</div>
+
+      <table>
+        <tbody>
+          <tr><td>Average Order Value (AOV)</td><td><strong>1,500 грн ($38)</strong></td></tr>
+          <tr><td>Комісія з локації (Host Fee)</td><td>10% → 150 грн ($3.80)</td></tr>
+          <tr><td>Сервісний збір з клієнта (Guest Fee)</td><td>5% → 75 грн ($1.90)</td></tr>
+          <tr><td>Процесинг платежів (LiqPay/Stripe)</td><td>~2.9% + ₴5 → ~₴48.5 ($1.23)</td></tr>
+          <tr class="total-row"><td>Чистий дохід платформи / транзакцію</td><td style="color: var(--emerald);">~176.5 грн ($4.47)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>LTV та Payback Period</h3>
+      <div class="formula">LTV = ARPU/трансакцію × Avg кіл-сть тр. × Retention
+= $4.47 × 10 × 1.0
+= <strong style="color: var(--emerald);">$44.70</strong>
+
+CAC (Blended, UA) = <strong style="color: var(--amber);">$12</strong>
+LTV:CAC = $44.70 / $12 = <strong style="color: var(--cyan);">3.73:1</strong> ✓ (>3:1)</div>
+
+      <table>
+        <tbody>
+          <tr><td>B2C CAC (PPC + Referral blend)</td><td><span class="badge badge-amber">$10–$15 ($12 avg)</span></td></tr>
+          <tr><td>Payback Period</td><td><span class="badge badge-green">2–3 бронювання</span></td></tr>
+          <tr><td>Avg трансакцій / клієнта (Y1)</td><td>8–12 (спорт: щотижня; фотостудії: 2-3/рік)</td></tr>
+          <tr><td>Churn Rate (Target, Monthly)</td><td>< 5%</td></tr>
+          <tr><td>Repeat Booking Rate (Target)</td><td>> 60%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SECTION 3: AOV BY SEGMENT ═══════════════ -->
+<div class="section">
+  <h2>3. Середні чеки за сегментами (AOV Breakdown, Київ)</h2>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Сегмент локації</th>
+          <th>Ціна оренди / год</th>
+          <th>Типова сесія</th>
+          <th>AOV (2 год.)</th>
+          <th>Дохід платф. (15%)</th>
+          <th>Частота</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>⚽ Футбольні поля / Спорт</td>
+          <td>700 – 1,000 грн</td>
+          <td>1.5 год</td>
+          <td><strong>1,050 – 1,500 грн</strong></td>
+          <td>158 – 225 грн</td>
+          <td><span class="badge badge-green">Щотижня</span></td>
+        </tr>
+        <tr>
+          <td>📸 Фотостудії / Лофти</td>
+          <td>500 – 1,600 грн</td>
+          <td>2–4 год</td>
+          <td><strong>1,500 – 4,800 грн</strong></td>
+          <td>225 – 720 грн</td>
+          <td><span class="badge badge-amber">1–3× / міс</span></td>
+        </tr>
+        <tr>
+          <td>🏢 Коворкінги / Конференц-зали</td>
+          <td>1,000 – 3,000+ грн</td>
+          <td>2–8 год</td>
+          <td><strong>2,000 – 10,000+ грн</strong></td>
+          <td>300 – 1,500 грн</td>
+          <td><span class="badge badge-blue">Irregular</span></td>
+        </tr>
+        <tr>
+          <td>🎮 Зали для настільних ігор</td>
+          <td>300 – 600 грн</td>
+          <td>3 год</td>
+          <td><strong>900 – 1,800 грн</strong></td>
+          <td>135 – 270 грн</td>
+          <td><span class="badge badge-green">2× / міс</span></td>
+        </tr>
+        <tr>
+          <td>🎶 Івент-зали / Банкетні</td>
+          <td>2,000 – 8,000+ грн</td>
+          <td>4–8 год</td>
+          <td><strong>8,000 – 40,000+ грн</strong></td>
+          <td>1,200 – 6,000 грн</td>
+          <td><span class="badge badge-rose">Рідко</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top: 14px; font-size: 12px; color: var(--slate-400);">
+      Стратегія перехресних продажів (Cross-sell): користувач спортивного сегменту (висока частота, низький AOV) отримує рекомендації
+      креативних просторів (низька частота, високий AOV) → <strong>максимізація загального LTV</strong>.
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════ SECTION 4: R&D COSTS ═══════════════ -->
+<div class="section">
+  <h2>4. Витрати на розробку (CAPEX — R&D Team)</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Core Team (MVP, 6 місяців)</h3>
+      <table>
+        <thead><tr><th>Роль</th><th>Кількість</th><th>$/міс (кожен)</th><th>$/міс (разом)</th></tr></thead>
+        <tbody>
+          <tr><td>Product Manager / Tech Lead</td><td>1</td><td>$5,000</td><td>$5,000</td></tr>
+          <tr><td>Backend Developer (Java/Node)</td><td>2</td><td>$4,800</td><td>$9,600</td></tr>
+          <tr><td>Mobile Developer (Flutter)</td><td>2</td><td>$5,000</td><td>$10,000</td></tr>
+          <tr><td>UI/UX Designer</td><td>1</td><td>$3,500</td><td>$3,500</td></tr>
+          <tr><td>QA Engineer</td><td>1</td><td>$2,500</td><td>$2,500</td></tr>
+          <tr class="total-row"><td colspan="3">ФОП (щомісяця)</td><td style="color: var(--cyan);">$30,600</td></tr>
+        </tbody>
+      </table>
+      <div class="card-accent" style="margin-top: 14px; padding: 14px;">
+        <div class="formula" style="margin: 0;">MVP Budget (6 міс) = $30,600 × 6 = <strong style="color: var(--emerald);">$183,600</strong>
++ Infra (AWS/GCP) & Tools = $10,000
++ Contingency (10%) = $19,360
+─────────────────────────
+Total R&D CAPEX = <strong style="color: var(--violet);">$212,960 ≈ $250,000</strong></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Порівняння зарплат (Senior, 2025)</h3>
+      <table>
+        <thead><tr><th>Роль</th><th>🇺🇦 UA $/міс</th><th>🇺🇸 US $/міс</th><th>Економія</th></tr></thead>
+        <tbody>
+          <tr><td>.NET / Java Dev</td><td>$4,800</td><td>$10,000</td><td><span class="badge badge-green">52%</span></td></tr>
+          <tr><td>Mobile (iOS/Android)</td><td>$5,000</td><td>$13,750</td><td><span class="badge badge-green">64%</span></td></tr>
+          <tr><td>UI/UX Designer</td><td>$3,500</td><td>$8,500</td><td><span class="badge badge-green">59%</span></td></tr>
+          <tr><td>ML / AI Engineer</td><td>$3,100</td><td>$10,500</td><td><span class="badge badge-green">70%</span></td></tr>
+          <tr><td>Data Engineer</td><td>$3,840</td><td>$10,000</td><td><span class="badge badge-green">62%</span></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size: 11px; color: var(--slate-400); margin-top: 12px;">
+        Джерела: DOU.ua (2025), Liga.net (Mid-2025), Moldstud. Медіанна ЗП IT UA: $3,000–$3,500/міс.
+        Щорічне зростання ~10%. IT-галузь UA: 346,000+ фахівців.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SECTION 5: SEED ALLOCATION ═══════════════ -->
+<div class="section">
+  <h2>5. Розподіл інвестицій Seed Round ($600,000)</h2>
+  <div class="card">
+    <div class="waterfall">
+      <div class="wf-seg" style="flex: 41.6; background: linear-gradient(135deg, var(--blue), var(--violet));">R&D $250K (41.6%)</div>
+      <div class="wf-seg" style="flex: 30.0; background: linear-gradient(135deg, var(--emerald), #059669);">Marketing $180K (30%)</div>
+      <div class="wf-seg" style="flex: 20.0; background: linear-gradient(135deg, var(--amber), #D97706);">Buffer $120K (20%)</div>
+      <div class="wf-seg" style="flex: 8.4; background: linear-gradient(135deg, var(--violet), #6D28D9);">Legal $50K (8.4%)</div>
+    </div>
+
+    <div class="grid-4" style="margin-top: 20px;">
+      <div>
+        <h3 style="color: var(--blue);">Розробка продукту</h3>
+        <div style="font-size: 24px; font-weight: 800; color: var(--blue);">$250,000</div>
+        <p style="font-size: 12px; margin-top: 6px;">In-house команда 7 осіб, інфраструктура AWS/GCP, інтеграція LiqPay/Stripe, ШІ-алгоритми матчмейкінгу.</p>
+      </div>
+      <div>
+        <h3 style="color: var(--emerald);">Маркетинг & Sales</h3>
+        <div style="font-size: 24px; font-weight: 800; color: var(--emerald);">$180,000</div>
+        <p style="font-size: 12px; margin-top: 6px;">B2C CAC (PPC, SMM), B2B Outbound Sales, реферальні програми, бонуси для першого бронювання.</p>
+      </div>
+      <div>
+        <h3 style="color: var(--amber);">Буферний резерв</h3>
+        <div style="font-size: 24px; font-weight: 800; color: var(--amber);">$120,000</div>
+        <p style="font-size: 12px; margin-top: 6px;">Покриття касових розривів на етапі масштабування. Забезпечення ліквідності маркетплейсу.</p>
+      </div>
+      <div>
+        <h3 style="color: var(--violet);">Юр. & Адмін.</h3>
+        <div style="font-size: 24px; font-weight: 800; color: var(--violet);">$50,000</div>
+        <p style="font-size: 12px; margin-top: 6px;">Публічна оферта, GDPR/захист даних, бухгалтерія, реєстрація ТМ.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SECTION 6: REVENUE PROJECTIONS ═══════════════ -->
+<div class="section">
+  <h2>6. Прогноз доходів (12 місяців від запуску MVP)</h2>
+  <div class="card">
+    <!-- Visual bar chart -->
+    <div class="chart-bar" style="margin-bottom: 30px;">
+      <div class="bar-col">
+        <div class="bar-value">$1.4K</div>
+        <div class="bar" style="height: 10px; background: var(--slate-700);"></div>
+        <div class="bar-label">M1</div>
+      </div>
+      <div class="bar-col">
+        <div class="bar-value">$4.3K</div>
+        <div class="bar" style="height: 24px; background: var(--violet);"></div>
+        <div class="bar-label">M2</div>
+      </div>
+      <div class="bar-col">
+        <div class="bar-value">$11.4K</div>
+        <div class="bar" style="height: 48px; background: var(--violet);"></div>
+        <div class="bar-label">M3</div>
+      </div>
+      <div class="bar-col">
+        <div class="bar-value">$15.7K</div>
+        <div class="bar" style="height: 65px; background: var(--blue);"></div>
+        <div class="bar-label">M4</div>
+      </div>
+      <div class="bar-col">
+        <div class="bar-value">$21.4K</div>
+        <div class="bar" style="height: 85px; background: var(--blue);"></div>
+        <div class="bar-label">M5</div>
+      </div>
+      <div class="bar-col">
+        <div class="bar-value">$28.5K</div>
+        <div class="bar" style="height: 110px; background: var(--blue);"></div>
+        <div class="bar-label">M6</div>
+      </div>
+      <div class="bar-col">
+        <div class="bar-value">$34.2K</div>
+        <div class="bar" style="height: 128px; background: var(--cyan);"></div>
+        <div class="bar-label">M7</div>
+      </div>
+      <div class="bar-col">
+        <div class="bar-value">$38.0K</div>
+        <div class="bar" style="height: 140px; background: var(--cyan);"></div>
+        <div class="bar-label">M8</div>
+      </div>
+      <div class="bar-col">
+        <div class="bar-value">$42.7K</div>
+        <div class="bar" style="height: 155px; background: var(--cyan);"></div>
+        <div class="bar-label">M9</div>
+      </div>
+      <div class="bar-col">
+        <div class="bar-value">$47.0K</div>
+        <div class="bar" style="height: 170px; background: var(--emerald);"></div>
+        <div class="bar-label">M10</div>
+      </div>
+      <div class="bar-col">
+        <div class="bar-value">$51.3K</div>
+        <div class="bar" style="height: 185px; background: var(--emerald);"></div>
+        <div class="bar-label">M11</div>
+      </div>
+      <div class="bar-col">
+        <div class="bar-value" style="color: var(--cyan); font-size: 14px;">$57.0K</div>
+        <div class="bar" style="height: 210px; background: linear-gradient(to top, var(--emerald), var(--cyan));"></div>
+        <div class="bar-label" style="font-weight: 700; color: var(--cyan);">M12</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Місяць</th>
+          <th>B2B партнерів (cumul.)</th>
+          <th>B2C активних клієнтів</th>
+          <th>Транзакцій / міс</th>
+          <th>GMV</th>
+          <th>Net Revenue (15%)</th>
+          <th>Cumul. Revenue</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>M1</td><td>15</td><td>300</td><td>250</td><td>$9.5K</td><td>$1,425</td><td>$1.4K</td></tr>
+        <tr><td>M2</td><td>30</td><td>700</td><td>750</td><td>$28.5K</td><td>$4,275</td><td>$5.7K</td></tr>
+        <tr><td>M3</td><td>50</td><td>1,500</td><td>2,000</td><td>$76K</td><td>$11,400</td><td>$17.1K</td></tr>
+        <tr style="background: rgba(37,99,235,0.05);">
+          <td><strong>M6</strong></td><td><strong>120</strong></td><td><strong>4,000</strong></td>
+          <td><strong>5,000</strong></td><td><strong>$190K</strong></td>
+          <td><strong style="color: var(--blue);">$28,500</strong></td>
+          <td><strong>$115K</strong></td>
+        </tr>
+        <tr><td>M9</td><td>200</td><td>7,500</td><td>7,500</td><td>$285K</td><td>$42,750</td><td>$260K</td></tr>
+        <tr style="background: rgba(6,182,212,0.08);">
+          <td style="color: var(--cyan); font-weight: 700;">M12</td>
+          <td style="font-weight: 700;">300+</td>
+          <td style="font-weight: 700;">12,000</td>
+          <td style="color: var(--cyan); font-weight: 700;">10,000</td>
+          <td style="color: var(--cyan); font-weight: 700;">$380K</td>
+          <td style="color: var(--cyan); font-weight: 700;">$57,000</td>
+          <td style="color: var(--emerald); font-weight: 700;">$410K</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="card-accent" style="margin-top: 16px; text-align: center;">
+      <p style="font-size: 14px; margin: 0; color: var(--slate-50);">
+        🎯 <strong>Annual Run Rate (M12):</strong> <span style="color: var(--cyan); font-weight: 800; font-size: 18px;">$684,000</span>
+        — перекриває Seed раунд та доводить Product-Market Fit для Series A.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SECTION 7: BURN RATE ═══════════════ -->
+<div class="section">
+  <h2>7. Burn Rate та Cash Runway</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Щомісячний Burn Rate (після запуску)</h3>
+      <table>
+        <tbody>
+          <tr><td>R&D Team (ФОП)</td><td>$30,600</td></tr>
+          <tr><td>Cloud Infra (AWS/GCP)</td><td>$1,500</td></tr>
+          <tr><td>Marketing (після MVP)</td><td>$8,000 – $15,000</td></tr>
+          <tr><td>Office / Admin</td><td>$2,000</td></tr>
+          <tr><td>Legal & Accounting</td><td>$1,500</td></tr>
+          <tr class="total-row"><td>Total Monthly Burn</td><td style="color: var(--rose);">$43,600 – $50,600</td></tr>
+        </tbody>
+      </table>
+      <div class="formula" style="margin-top: 14px;">Runway = Cash / Avg Monthly Burn
+= $600,000 / $47,100
+= <strong style="color: var(--emerald);">~12.7 місяців (без доходу)</strong>
+
+З урахуванням зростаючого доходу:
+Runway ≈ <strong style="color: var(--cyan);">18+ місяців</strong></div>
+    </div>
+
+    <div class="card">
+      <h3>Сценарний аналіз (Sensitivity)</h3>
+      <table>
+        <thead><tr><th>Сценарій</th><th>M12 Тр/міс</th><th>M12 MRR</th><th>Breakeven</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-rose">Песимістичний</span></td>
+            <td>4,000</td><td>$22,800</td>
+            <td>Не досягнуто (потребує Series A)</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-amber">Базовий</span></td>
+            <td>10,000</td><td>$57,000</td>
+            <td><strong style="color: var(--emerald);">Операційний breakeven M10-12</strong></td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-green">Оптимістичний</span></td>
+            <td>18,000</td><td>$102,600</td>
+            <td>Операційний breakeven M6-7, прибуток</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin-top: 14px; font-size: 12px; color: var(--slate-400);">
+        <strong>Ключові допущення базового сценарію:</strong><br>
+        • Щомісячне зростання B2C бази: 30-40% (перші 6 міс), 15-20% (міс 7-12)<br>
+        • Repeat booking rate: 60%+<br>
+        • B2B conversion rate (outbound): 25%<br>
+        • Avg AOV: $38 (зважений по сегментах)
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SECTION 8: BENCHMARKS ═══════════════ -->
+<div class="section">
+  <h2>8. Бенчмарки глобальних лідерів (актуальні дані 2025)</h2>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Компанія</th>
+          <th>Модель</th>
+          <th>GMV / Revenue</th>
+          <th>Take Rate</th>
+          <th>Користувачі</th>
+          <th>Інвестиції</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Peerspace</strong></td>
+          <td>Горизонтальний маркетплейс (комерційні простори)</td>
+          <td>~$500M GMV → <strong>~$100M</strong> revenue</td>
+          <td>~20% (15% host + 12-18% guest)</td>
+          <td>3M+ організаторів</td>
+          <td>$39M+ VC</td>
+        </tr>
+        <tr>
+          <td><strong>Playtomic</strong></td>
+          <td>Вертикальний SaaS + Marketplace (ракеткові види)</td>
+          <td>€346M+ GMV → €29M net revenue (+38% YoY)</td>
+          <td>SaaS €250/міс + €0.20/бронювання</td>
+          <td>4.7M гравців, 1.5M MAU, 6000+ клубів</td>
+          <td>€65M (Mar 2025)</td>
+        </tr>
+        <tr>
+          <td><strong>Eventbrite</strong></td>
+          <td>Транзакційна платформа квитків</td>
+          <td>$65B+ global ticketing market</td>
+          <td>~3.7% + $1.59/квиток + 2.5% processing</td>
+          <td>5M+ організаторів</td>
+          <td>Public (NYSE: EB)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════ SECTION 9: RISKS ═══════════════ -->
+<div class="section">
+  <h2>9. Ризики та превентивні заходи</h2>
+  <div class="grid-3">
+    <div class="card">
+      <h3 style="color: var(--rose);">⚠️ Disintermediation</h3>
+      <p>Клієнти можуть домовлятися з локаціями напряму, обходячи комісію.</p>
+      <p style="margin-top: 8px;"><strong style="color: var(--emerald);">Мітігація:</strong> Страхування, No-Show Protection, Split Bill, лояльність (кешбек), рейтингова система.</p>
+    </div>
+    <div class="card">
+      <h3 style="color: var(--rose);">⚠️ Регуляторні ризики</h3>
+      <p>Штрафи за спам (~$1400), обмеження рекламних каналів, GDPR-вимоги.</p>
+      <p style="margin-top: 8px;"><strong style="color: var(--emerald);">Мітігація:</strong> Opt-in маркетинг, модерація контенту, юридичний комплаєнс з першого дня.</p>
+    </div>
+    <div class="card">
+      <h3 style="color: var(--rose);">⚠️ Інфраструктурні (UA)</h3>
+      <p>Блекаути, безпекові загрози, нестабільність мережі.</p>
+      <p style="margin-top: 8px;"><strong style="color: var(--emerald);">Мітігація:</strong> Смарт-фільтри ("генератор", "бомбосховище") перетворюють проблему на конкурентну перевагу.</p>
+    </div>
+  </div>
+</div>
+
+<div class="glow-line"></div>
+<p style="text-align: center; font-size: 12px; color: var(--slate-400);">
+  Meet Ecosystem — Фінансова модель · Конфіденційно · Березень 2026
+</p>
+
+</body>
+</html>

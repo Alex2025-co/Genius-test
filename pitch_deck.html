@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <title>Meet Ecosystem — Інвестиційний Pitch Deck (2026)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Meet Ecosystem — SaaS-маркетплейс для бронювання комерційних просторів. Інвестиційний Pitch Deck Seed Round 2026.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --violet: #7C3AED;
+      --violet-light: #A78BFA;
+      --blue: #2563EB;
+      --blue-light: #60A5FA;
+      --cyan: #06B6D4;
+      --cyan-light: #22D3EE;
+      --emerald: #10B981;
+      --emerald-light: #34D399;
+      --amber: #F59E0B;
+      --amber-light: #FBBF24;
+      --rose: #F43F5E;
+      --rose-light: #FB7185;
+      --slate-50: #F8FAFC;
+      --slate-100: #F1F5F9;
+      --slate-200: #E2E8F0;
+      --slate-300: #CBD5E1;
+      --slate-400: #94A3B8;
+      --slate-500: #64748B;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1E293B;
+      --slate-900: #0F172A;
+      --slate-950: #020617;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--slate-950);
+      color: var(--slate-300);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ───── Background effects ───── */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background:
+        radial-gradient(ellipse 600px 600px at 20% 10%, rgba(124,58,237,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 500px 500px at 80% 30%, rgba(37,99,235,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 400px 400px at 50% 70%, rgba(6,182,212,0.05) 0%, transparent 60%);
+      z-index: -1;
+      animation: bgDrift 25s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgDrift {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(-3%, -2%) rotate(3deg); }
+    }
+
+    /* ───── Navigation ───── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(2,6,23,0.7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.3s ease;
+    }
+
+    .nav.scrolled {
+      padding: 10px 40px;
+      background: rgba(2,6,23,0.9);
+    }
+
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1.1em;
+      background: linear-gradient(135deg, var(--violet), var(--blue), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-tag {
+      font-size: 0.7em;
+      font-weight: 600;
+      color: var(--slate-500);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .nav-dots {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .nav-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--slate-700);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+      padding: 0;
+    }
+
+    .nav-dot.active {
+      background: var(--violet);
+      box-shadow: 0 0 12px rgba(124,58,237,0.5);
+      transform: scale(1.3);
+    }
+
+    .nav-dot:hover {
+      background: var(--violet-light);
+    }
+
+    /* ───── Containers ───── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ───── Sections ───── */
+    .section {
+      min-height: 100vh;
+      padding: 140px 0 80px;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .section:first-child {
+      padding-top: 100px;
+    }
+
+    .section .container {
+      width: 100%;
+    }
+
+    /* ───── Reveal animation ───── */
+    .reveal-up {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-up.delay-1 { transition-delay: 0.1s; }
+    .reveal-up.delay-2 { transition-delay: 0.2s; }
+    .reveal-up.delay-3 { transition-delay: 0.3s; }
+    .reveal-up.delay-4 { transition-delay: 0.4s; }
+
+    /* ───── Typography ───── */
+    .section-tag {
+      display: inline-block;
+      font-size: 0.7em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 6px 18px;
+      border-radius: 99px;
+      margin-bottom: 24px;
+      background: rgba(124,58,237,0.12);
+      color: var(--violet-light);
+      border: 1px solid rgba(124,58,237,0.25);
+    }
+
+    h1 {
+      font-size: clamp(2.5em, 6vw, 4em);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      background: linear-gradient(135deg, var(--violet), var(--blue), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: clamp(1.6em, 3vw, 2.2em);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--slate-50);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    h3 {
+      font-size: 1em;
+      font-weight: 700;
+      color: var(--cyan);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .subtitle {
+      font-size: clamp(1em, 2vw, 1.3em);
+      color: var(--slate-300);
+      max-width: 700px;
+      line-height: 1.7;
+    }
+
+    /* ───── Glass cards ───── */
+    .glass {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 28px;
+      backdrop-filter: blur(12px);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glass:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,0.12);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    .glass-accent {
+      background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(37,99,235,0.08));
+      border: 1px solid rgba(124,58,237,0.18);
+      border-radius: 20px;
+      padding: 28px;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .glass-accent:hover {
+      transform: translateY(-4px);
+      border-color: rgba(124,58,237,0.35);
+    }
+
+    /* ───── Grid layouts ───── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    /* ───── Lists ───── */
+    ul { list-style: none; padding: 0; }
+
+    ul li {
+      padding: 6px 0 6px 24px;
+      position: relative;
+      font-size: 0.88em;
+      color: var(--slate-300);
+      line-height: 1.6;
+    }
+
+    ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    /* ───── Stats ───── */
+    .stat-big {
+      font-size: clamp(2.5em, 5vw, 3.5em);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.65em;
+      color: var(--slate-400);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    /* ───── Badges ───── */
+    .badge {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 8px;
+      font-size: 0.7em;
+      font-weight: 700;
+    }
+
+    .badge-green  { background: rgba(16,185,129,0.15); color: var(--emerald); }
+    .badge-amber  { background: rgba(245,158,11,0.15); color: var(--amber); }
+    .badge-rose   { background: rgba(244,63,94,0.15);  color: var(--rose); }
+    .badge-blue   { background: rgba(37,99,235,0.15);  color: var(--blue); }
+    .badge-violet { background: rgba(124,58,237,0.15); color: var(--violet-light); }
+
+    /* ───── Glow line ───── */
+    .glow-line {
+      height: 3px;
+      border-radius: 99px;
+      margin: 28px 0;
+      background: linear-gradient(90deg, var(--violet), var(--blue), var(--cyan), transparent);
+    }
+
+    /* ───── Icon circle ───── */
+    .icon-circle {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6em;
+      flex-shrink: 0;
+    }
+
+    /* ───── Tables ───── */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82em;
+    }
+
+    th {
+      text-align: left;
+      color: var(--slate-400);
+      font-size: 0.75em;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--slate-700);
+      font-weight: 600;
+    }
+
+    td {
+      padding: 12px 16px;
+      color: var(--slate-300);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    tr:hover td {
+      background: rgba(255,255,255,0.02);
+    }
+
+    /* ───── Callout panel ───── */
+    .callout {
+      background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(6,182,212,0.06));
+      border: 1px solid rgba(124,58,237,0.15);
+      border-radius: 16px;
+      padding: 22px 28px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .callout p {
+      font-size: 0.9em;
+      color: var(--slate-100);
+      margin: 0;
+    }
+
+    /* ───── Phase timeline ───── */
+    .phase-card {
+      position: relative;
+      padding-left: 3px;
+    }
+
+    .phase-card .glass {
+      border-left: 3px solid;
+    }
+
+    /* ───── Hero section extras ───── */
+    .hero-center {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-highlight {
+      font-size: 1.1em;
+      color: var(--slate-300);
+      line-height: 1.7;
+      max-width: 720px;
+    }
+
+    .confidential-tag {
+      font-size: 0.75em;
+      color: var(--slate-500);
+    }
+
+    /* ───── CTA Section ───── */
+    .cta-amount {
+      font-size: clamp(3em, 8vw, 5em);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--violet), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+    }
+
+    .cta-sub {
+      font-size: 1em;
+      color: var(--slate-400);
+      margin-top: 8px;
+    }
+
+    /* ───── Footer ───── */
+    .footer {
+      padding: 60px 0;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .footer p {
+      font-size: 0.8em;
+      color: var(--slate-500);
+    }
+
+    /* ───── Divider ───── */
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(124,58,237,0.2), rgba(37,99,235,0.2), transparent);
+    }
+
+    /* ───── Scroll indicator ───── */
+    .scroll-indicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--violet), var(--blue), var(--cyan));
+      z-index: 200;
+      transition: width 0.1s linear;
+    }
+
+    /* ───── Responsive ───── */
+    @media (max-width: 900px) {
+      .grid-2, .grid-3, .grid-4 {
+        grid-template-columns: 1fr;
+      }
+
+      .nav { padding: 12px 20px; }
+      .container { padding: 0 20px; }
+      .section { padding: 100px 0 60px; }
+      .glass, .glass-accent { padding: 20px; }
+      .nav-dots { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .grid-2, .grid-3, .grid-4 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ───── Animated number counter ───── */
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .stat-animate {
+      animation: fadeInScale 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* ───── Highlight row ───── */
+    .row-highlight {
+      background: rgba(124,58,237,0.08) !important;
+    }
+
+    .row-highlight td {
+      font-weight: 700;
+      color: var(--cyan) !important;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Scroll progress indicator -->
+<div class="scroll-indicator" id="scrollIndicator"></div>
+
+<!-- Navigation -->
+<nav class="nav" id="mainNav">
+  <div style="display: flex; align-items: center; gap: 16px;">
+    <span class="nav-brand">Meet Ecosystem</span>
+    <span class="nav-tag">Pitch Deck · 2026</span>
+  </div>
+  <div class="nav-dots" id="navDots"></div>
+</nav>
+
+<!-- ═══════════════════════════════ SECTION 1: HERO ═══════════════════════════════ -->
+<section class="section" id="sec-hero" data-nav="Титул">
+  <div class="container hero-center">
+    <div class="reveal-up">
+      <div class="section-tag">Seed Stage · 2026</div>
+    </div>
+    <h1 class="reveal-up delay-1">Meet Ecosystem</h1>
+    <p class="hero-highlight reveal-up delay-2">
+      SaaS-маркетплейс, що з'єднує вільні комерційні простори з людьми,<br>
+      які шукають місця для <strong style="color: var(--cyan);">гри</strong>,
+      <strong style="color: var(--violet-light);">творчості</strong> та
+      <strong style="color: var(--emerald);">зустрічей</strong>.
+    </p>
+    <div class="glow-line reveal-up delay-3" style="max-width: 400px; width: 100%;"></div>
+    <p class="confidential-tag reveal-up delay-4">Конфіденційно · Для інвесторів</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SECTION 2: PROBLEM ═══════════════════════════════ -->
+<section class="section" id="sec-problem" data-nav="Проблема">
+  <div class="container">
+    <div class="section-tag reveal-up">Проблема</div>
+    <h2 class="reveal-up delay-1">Стагнація $15B+ ринку через фрагментацію</h2>
+
+    <div class="grid-2 reveal-up delay-2" style="margin-top: 16px;">
+      <div class="glass">
+        <h3 style="color: var(--rose);">🧑‍💻 Для користувачів (B2C)</h3>
+        <ul>
+          <li>Пошук фотостудії або спортзалу — телефонні дзвінки, месенджери, застарілі сайти</li>
+          <li>Відсутність прозорих онлайн-графіків та миттєвого бронювання</li>
+          <li>Неможливість розділити оплату з друзями (Split Bill)</li>
+          <li>Немає єдиної платформи: різні застосунки для спорту, фотостудій, коворкінгів</li>
+        </ul>
+      </div>
+      <div class="glass">
+        <h3 style="color: var(--rose);">🏢 Для бізнесу (B2B)</h3>
+        <ul>
+          <li>Втрата до <strong style="color: var(--rose);">40% доходу</strong> через простої приміщень</li>
+          <li>Управління розкладом у блокнотах та Excel; відсутність CRM</li>
+          <li>Висока вартість IT-рішень (від $5,000/міс) для малого бізнесу</li>
+          <li>Повільна комунікація → Клієнти йдуть до конкурентів, які відповідають швидше</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout reveal-up delay-3">
+      <p>
+        <strong>Результат:</strong> 80%+ транзакцій з оренди фотостудій / футбольних полів / залів для настільних ігор в Україні
+        відбуваються <strong style="color: var(--rose);">поза цифровими платформами</strong> — через дзвінки та WhatsApp/Telegram.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════ SECTION 3: SOLUTION ═══════════════════════════════ -->
+<section class="section" id="sec-solution" data-nav="Рішення">
+  <div class="container">
+    <div class="section-tag reveal-up">Рішення</div>
+    <h2 class="reveal-up delay-1">Super App + SaaS-Portal — One Platform</h2>
+
+    <div class="grid-2 reveal-up delay-2" style="margin-top: 16px;">
+      <div class="glass">
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 16px;">
+          <div class="icon-circle" style="background: rgba(6,182,212,0.15);">📱</div>
+          <h3 style="margin: 0;">Mobile Super App (B2C)</h3>
+        </div>
+        <ul>
+          <li>Смарт-пошук локації за 5 секунд (фільтри: генератор, бомбосховище, Wi-Fi)</li>
+          <li>Миттєве бронювання з онлайн-оплатою (LiqPay/Stripe)</li>
+          <li>Split Bill — розділення оплати між друзями</li>
+          <li>ШІ-матчмейкінг: пошук суперників та партнерів для гри</li>
+          <li>Крос-категорії: спорт → фото → коворкінг → вечірка</li>
+        </ul>
+      </div>
+      <div class="glass">
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 16px;">
+          <div class="icon-circle" style="background: rgba(124,58,237,0.15);">💻</div>
+          <h3 style="margin: 0;">SaaS-ERP Portal (B2B)</h3>
+        </div>
+        <ul>
+          <li>Повна автоматизація: розклад, CRM, фінансовий облік</li>
+          <li>Економія <strong style="color: var(--emerald);">120+ годин/міс</strong> для кожної локації</li>
+          <li>Надається <span class="badge badge-green">БЕЗКОШТОВНО</span> в обмін на транзакційну комісію</li>
+          <li>No-Show Protection: передоплата + рейтингова система</li>
+          <li>Аналітика ROI та прогнозування попиту (ШІ)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════ SECTION 4: MARKET SIZE ═══════════════════════════════ -->
+<section class="section" id="sec-market" data-nav="Ринок">
+  <div class="container">
+    <div class="section-tag reveal-up">Ринок</div>
+    <h2 class="reveal-up delay-1">TAM / SAM / SOM</h2>
+
+    <div class="grid-3 reveal-up delay-2" style="margin-top: 16px;">
+      <div class="glass" style="text-align: center;">
+        <span class="stat-label">TAM (Global EMS + Venues)</span>
+        <div class="stat-big" style="color: var(--violet);">$66B</div>
+        <p style="font-size: 0.78em; margin-top: 10px;">ПЗ для подій до 2033 (CAGR 17.4%, SkyQuest).<br>Спортивний ринок: $654B до 2030.</p>
+      </div>
+      <div class="glass" style="text-align: center;">
+        <span class="stat-label">SAM (CEE Region)</span>
+        <div class="stat-big" style="color: var(--blue);">$2.5B</div>
+        <p style="font-size: 0.78em; margin-top: 10px;">Центральна та Східна Європа — швидко зростаючий ринок бронювання.</p>
+      </div>
+      <div class="glass" style="text-align: center;">
+        <span class="stat-label">SOM (Україна, Testbed)</span>
+        <div class="stat-big" style="color: var(--emerald);">$50M+</div>
+        <p style="font-size: 0.78em; margin-top: 10px;">Короткострокова оренда специфічних локацій. Цифровізація бізнесу — 55.7/100.</p>
+      </div>
+    </div>
+
+    <div class="glass reveal-up delay-3" style="margin-top: 24px;">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Аналітичне джерело</th><th>Базова оцінка</th><th>Прогноз</th><th>CAGR</th></tr></thead>
+          <tbody>
+            <tr><td>Mordor Intelligence</td><td>$15.2B (2026)</td><td>$24.17B (2031)</td><td>9.73%</td></tr>
+            <tr><td>Grand View Research</td><td>$8.4B (2024)</td><td>$17.33B (2030)</td><td>13.2%</td></tr>
+            <tr class="row-highlight"><td>SkyQuest</td><td>$15.6B (2024)</td><td><strong>$66.09B (2033)</strong></td><td><strong>17.4%</strong></td></tr>
+            <tr><td>Fortune BI</td><td>$16.11B (2026)</td><td>$43.6B (2032)</td><td>15.3%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════ SECTION 5: BENCHMARKS ═══════════════════════════════ -->
+<section class="section" id="sec-benchmarks" data-nav="Бенчмарки">
+  <div class="container">
+    <div class="section-tag reveal-up">Бенчмарки</div>
+    <h2 class="reveal-up delay-1">Світові лідери підтверджують модель</h2>
+
+    <div class="grid-2 reveal-up delay-2" style="margin-top: 16px;">
+      <div class="glass">
+        <h3>Peerspace <span class="badge badge-blue">Горизонтальний</span></h3>
+        <p style="margin-bottom: 10px;"><strong style="color: var(--slate-50);">~$100M</strong> річного доходу (2024) від $500M бронювань.</p>
+        <ul>
+          <li>Take Rate: <strong>~20%</strong> (15% host + 12-18% guest)</li>
+          <li>Страхування до $1M + гарантія від пошкоджень $25K</li>
+          <li>3M+ людей організували заходи</li>
+        </ul>
+      </div>
+      <div class="glass">
+        <h3>Playtomic <span class="badge badge-green">Вертикальний</span></h3>
+        <p style="margin-bottom: 10px;"><strong style="color: var(--slate-50);">€346M+</strong> транзакцій (+51% YoY, Sept 2025). €29M чистого доходу.</p>
+        <ul>
+          <li>4.7M гравців, <strong>1.5M MAU</strong>, 6000+ клубів, 66 країн</li>
+          <li>50% користувачів використовують застосунок <strong>щотижня</strong></li>
+          <li>Залучили €65M раунд (Mar 2025)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout reveal-up delay-3">
+      <p>
+        <strong>Наша перевага:</strong> Peerspace — лише простори (немає спорту). Playtomic — лише спорт (немає креативних просторів).
+        <br>Meet Ecosystem = <strong style="color: var(--cyan);">горизонтальна платформа</strong>, що об'єднує обидва сегменти → максимальний LTV.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════ SECTION 6: BUSINESS MODEL ═══════════════════════════════ -->
+<section class="section" id="sec-business" data-nav="Бізнес-модель">
+  <div class="container">
+    <div class="section-tag reveal-up">Бізнес-модель</div>
+    <h2 class="reveal-up delay-1">Гібридний Take Rate 15% + SaaS</h2>
+
+    <div class="grid-3 reveal-up delay-2" style="margin-top: 16px;">
+      <div class="glass" style="text-align: center;">
+        <div class="stat-big" style="color: var(--violet);">10%</div>
+        <p style="font-size: 0.88em; margin-top: 8px;">Комісія з власника локації<br><em>"No Cure — No Pay"</em></p>
+      </div>
+      <div class="glass" style="text-align: center;">
+        <div class="stat-big" style="color: var(--blue);">5%</div>
+        <p style="font-size: 0.88em; margin-top: 8px;">Сервісний збір з користувача<br>За зручність, безпеку та Split Bill</p>
+      </div>
+      <div class="glass" style="text-align: center;">
+        <div class="stat-big" style="color: var(--emerald);">+$</div>
+        <p style="font-size: 0.88em; margin-top: 8px;">Преміум-монетизація<br>Featured Listings, Підписки B2B</p>
+      </div>
+    </div>
+
+    <div class="glass reveal-up delay-3" style="margin-top: 24px;">
+      <h3 style="color: var(--slate-50);">Стратегія анти-витоку (Anti-Disintermediation):</h3>
+      <div class="grid-2" style="margin-top: 12px;">
+        <div>
+          <p style="font-size: 0.82em;"><strong style="color: var(--emerald);">Для хостів:</strong> Фінансова гарантія до ₴100K від No-Show, рейтингова система клієнтів, CRM та автоматизація "з коробки".</p>
+        </div>
+        <div>
+          <p style="font-size: 0.82em;"><strong style="color: var(--cyan);">Для клієнтів:</strong> Програма лояльності (кешбек), Split Bill, страхування, ексклюзивні знижки.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════ SECTION 7: WHY NOW ═══════════════════════════════ -->
+<section class="section" id="sec-whynow" data-nav="Чому зараз?">
+  <div class="container">
+    <div class="section-tag reveal-up">Чому зараз?</div>
+    <h2 class="reveal-up delay-1">Конвергенція трьох мегатрендів</h2>
+
+    <div class="grid-3 reveal-up delay-2" style="margin-top: 16px;">
+      <div class="glass">
+        <h3 style="color: var(--violet);">📡 Технологічний зсув</h3>
+        <ul>
+          <li>99% українських МСБ планують диджиталізацію; 88% фокус — на оптимізації витрат</li>
+          <li>Cloud-платформи домінують (71.29% ринку EMS)</li>
+          <li>ШІ-онбординг вендорів прискорює підключення на 40%</li>
+          <li>Аналітика ROI — сегмент із найшвидшим зростанням (CAGR 10.22%)</li>
+        </ul>
+      </div>
+      <div class="glass">
+        <h3 style="color: var(--cyan);">🧠 Поведінковий зсув</h3>
+        <ul>
+          <li>Попит на офлайн-соціалізацію — на історичному максимумі (пост-COVID + війна)</li>
+          <li>Аматорський спорт: участь осіб до 35р. зросла до 64% у Європі</li>
+          <li>Падел-теніс: 81,000+ нових кортів до 2027; 92% утримання гравців</li>
+        </ul>
+      </div>
+      <div class="glass">
+        <h3 style="color: var(--emerald);">🇺🇦 Локальний зсув</h3>
+        <ul>
+          <li>63% компаній прискорили digital-трансформацію після 2022 р.</li>
+          <li>Сегмент послуг: цифровізація 70-80 балів, але малий бізнес — лише 41</li>
+          <li>Розрив = <strong>ринкова можливість</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════ SECTION 8: COMPETITION ═══════════════════════════════ -->
+<section class="section" id="sec-competition" data-nav="Конкуренція">
+  <div class="container">
+    <div class="section-tag reveal-up">Конкуренція</div>
+    <h2 class="reveal-up delay-1">Позиціонування: горизонтальний Super App</h2>
+
+    <div class="glass reveal-up delay-2" style="margin-top: 16px;">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Платформа</th><th>Тип</th><th>Категорії</th><th>Недолік</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Eventbrite</strong></td><td>Горизонт.</td>
+              <td>Тільки квитки</td><td><span class="badge badge-rose">Немає просторів / спорту</span></td>
+            </tr>
+            <tr>
+              <td><strong>Peerspace</strong></td><td>Горизонт.</td>
+              <td>Простори (фото, лофти)</td><td><span class="badge badge-rose">Немає спорту / соціальних функцій</span></td>
+            </tr>
+            <tr>
+              <td><strong>Playtomic</strong></td><td>Вертикал.</td>
+              <td>Спорт (падел, теніс)</td><td><span class="badge badge-rose">Тільки ракеткові види / немає креативу</span></td>
+            </tr>
+            <tr>
+              <td><strong>Book4Sport</strong></td><td>Локальний</td>
+              <td>UA спорт (базовий UI)</td><td><span class="badge badge-rose">Обмежений функціонал і UI</span></td>
+            </tr>
+            <tr>
+              <td><strong>Inlight / Eventlocations</strong></td><td>Каталог</td>
+              <td>UA простори</td><td><span class="badge badge-rose">Статичний каталог без оплати</span></td>
+            </tr>
+            <tr class="row-highlight">
+              <td><strong style="color: var(--cyan);">Meet Ecosystem</strong></td><td><strong>Super App</strong></td>
+              <td><strong>Спорт + Креатив + Івенти</strong></td>
+              <td><span class="badge badge-green">ALL-IN-ONE</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════ SECTION 9: GTM STRATEGY ═══════════════════════════════ -->
+<section class="section" id="sec-gtm" data-nav="Go-to-Market">
+  <div class="container">
+    <div class="section-tag reveal-up">Go-to-Market</div>
+    <h2 class="reveal-up delay-1">Supply-Driven Demand: розв'язання Cold Start</h2>
+
+    <div class="grid-3 reveal-up delay-2" style="margin-top: 16px;">
+      <div class="glass" style="border-left: 3px solid var(--violet);">
+        <h3 style="color: var(--violet);">Фаза 1 · Онбординг (Міс. 1-3)</h3>
+        <p style="font-size: 0.88em;">Агресивний B2B Outbound: безкоштовний SaaS-портал для 50+ топових локацій Києва (фотостудії, футбольні поля, коворкінги).</p>
+        <p style="font-size: 0.82em; color: var(--violet-light); margin-top: 10px;"><em>KPI: 50 B2B партнерів</em></p>
+      </div>
+      <div class="glass" style="border-left: 3px solid var(--blue);">
+        <h3 style="color: var(--blue);">Фаза 2 · Lift-off (Міс. 3-6)</h3>
+        <p style="font-size: 0.88em;">Власники переводять існуючих клієнтів в наш застосунок (з Instagram/Telegram). Supply генерує Demand органічно.</p>
+        <p style="font-size: 0.82em; color: var(--blue-light); margin-top: 10px;"><em>KPI: 2000 тр/міс</em></p>
+      </div>
+      <div class="glass" style="border-left: 3px solid var(--emerald);">
+        <h3 style="color: var(--emerald);">Фаза 3 · Flywheel (Міс. 6-12)</h3>
+        <p style="font-size: 0.88em;">ШІ крос-сейли: "Ти грав у футбол → Ось фотостудія поруч для твого проєкту". Мережеві ефекти знижують CAC.</p>
+        <p style="font-size: 0.82em; color: var(--emerald-light); margin-top: 10px;"><em>KPI: 10,000 тр/міс</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════ SECTION 10: UNIT ECONOMICS ═══════════════════════════════ -->
+<section class="section" id="sec-finance" data-nav="Фінанси">
+  <div class="container">
+    <div class="section-tag reveal-up">Фінанси</div>
+    <h2 class="reveal-up delay-1">Юніт-Економіка та Прогнози</h2>
+
+    <div class="grid-4 reveal-up delay-2" style="margin-top: 16px;">
+      <div class="glass" style="text-align: center;">
+        <span class="stat-label">AOV (Середній чек)</span>
+        <div class="stat-big" style="color: var(--slate-50);">$38</div>
+        <p style="font-size: 0.78em; margin-top: 6px;">~1500 грн</p>
+      </div>
+      <div class="glass" style="text-align: center;">
+        <span class="stat-label">Дохід / Транзакцію</span>
+        <div class="stat-big" style="color: var(--emerald);">$5.7</div>
+        <p style="font-size: 0.78em; margin-top: 6px;">Take Rate 15%</p>
+      </div>
+      <div class="glass" style="text-align: center;">
+        <span class="stat-label">CAC (Україна)</span>
+        <div class="stat-big" style="color: var(--amber);">$12</div>
+        <p style="font-size: 0.78em; margin-top: 6px;">PPC + Referral blended</p>
+      </div>
+      <div class="glass" style="text-align: center;">
+        <span class="stat-label">LTV:CAC</span>
+        <div class="stat-big" style="color: var(--cyan);">3.8:1</div>
+        <p style="font-size: 0.78em; margin-top: 6px;">Окупність за 2-3 бронювання</p>
+      </div>
+    </div>
+
+    <div class="glass reveal-up delay-3" style="margin-top: 24px;">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Місяць</th><th>Транзакцій/міс</th><th>GMV</th><th>MRR (Net Revenue)</th><th>ARR Run Rate</th></tr></thead>
+          <tbody>
+            <tr><td>Month 3</td><td>2,000</td><td>$76K</td><td>$11,400</td><td>$137K</td></tr>
+            <tr><td>Month 6</td><td>5,000</td><td>$190K</td><td>$28,500</td><td>$342K</td></tr>
+            <tr class="row-highlight"><td>Month 12</td><td>10,000</td><td>$380K</td><td>$57,000</td><td>$684K</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════ SECTION 11: TEAM ═══════════════════════════════ -->
+<section class="section" id="sec-team" data-nav="Команда">
+  <div class="container">
+    <div class="section-tag reveal-up">Команда</div>
+    <h2 class="reveal-up delay-1">Українська інженерна перевага</h2>
+
+    <div class="grid-2 reveal-up delay-2" style="margin-top: 16px;">
+      <div class="glass">
+        <h3 style="color: var(--slate-50);">👤 CEO</h3>
+        <p>Експертиза в Marketplaces / eCommerce / Growth.</p>
+      </div>
+      <div class="glass">
+        <h3 style="color: var(--slate-50);">👤 CTO</h3>
+        <p>Архітектор SaaS-платформ. Досвід у високонавантажених мобільних системах.</p>
+      </div>
+    </div>
+
+    <div class="glass reveal-up delay-3" style="margin-top: 24px;">
+      <h3 style="color: var(--emerald);">Конкурентна перевага розробки (2025 дані):</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Роль (Senior)</th><th>🇺🇦 Україна ($/міс)</th><th>🇺🇸 США ($/міс)</th><th>Економія</th></tr></thead>
+          <tbody>
+            <tr><td>Backend Developer</td><td>$4,800</td><td>$10,000</td><td><span class="badge badge-green">52%</span></td></tr>
+            <tr><td>Mobile Developer</td><td>$5,000</td><td>$13,750</td><td><span class="badge badge-green">64%</span></td></tr>
+            <tr><td>UI/UX Designer</td><td>$3,500</td><td>$8,500</td><td><span class="badge badge-green">59%</span></td></tr>
+            <tr><td>ML / AI Engineer</td><td>$3,100</td><td>$10,500</td><td><span class="badge badge-green">70%</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 0.75em; color: var(--slate-500); margin-top: 10px;">Джерела: DOU.ua, Liga.net (2025). Медіанна ЗП IT в Україні: $3,000-$3,500/міс.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════ SECTION 12: THE ASK ═══════════════════════════════ -->
+<section class="section" id="sec-ask" data-nav="Інвестиція">
+  <div class="container hero-center">
+    <div class="section-tag reveal-up">Інвестиційна пропозиція</div>
+    <h2 class="reveal-up delay-1" style="margin-bottom: 12px;">Ми залучаємо</h2>
+    <div class="cta-amount reveal-up delay-2">$600,000</div>
+    <p class="cta-sub reveal-up delay-2">Seed Round · Pre-Product-Market Fit</p>
+
+    <div class="glow-line reveal-up delay-3" style="max-width: 500px; width: 100%;"></div>
+
+    <div class="grid-3 reveal-up delay-3" style="max-width: 800px; width: 100;">
+      <div class="glass-accent" style="text-align: center;">
+        <span class="stat-label">R&D / Продукт</span>
+        <div style="font-size: 2em; font-weight: 900; color: var(--blue);">$250K</div>
+        <p style="font-size: 0.78em;">41.6%</p>
+      </div>
+      <div class="glass-accent" style="text-align: center;">
+        <span class="stat-label">Маркетинг & Sales</span>
+        <div style="font-size: 2em; font-weight: 900; color: var(--emerald);">$180K</div>
+        <p style="font-size: 0.78em;">30.0%</p>
+      </div>
+      <div class="glass-accent" style="text-align: center;">
+        <span class="stat-label">Буфер & OPEX</span>
+        <div style="font-size: 2em; font-weight: 900; color: var(--amber);">$170K</div>
+        <p style="font-size: 0.78em;">28.4%</p>
+      </div>
+    </div>
+
+    <div class="callout reveal-up delay-4" style="max-width: 720px; width: 100%; margin-top: 28px;">
+      <p style="font-size: 0.95em;">
+        🎯 <strong>Ціль:</strong> Операційна беззбитковість на локальному ринку протягом 12 місяців → Серія А.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════ SECTION 13: THANK YOU ═══════════════════════════════ -->
+<section class="section" id="sec-thanks" data-nav="Контакт">
+  <div class="container hero-center">
+    <h1 class="reveal-up" style="font-size: clamp(2.5em, 6vw, 4em);">Дякуємо.</h1>
+    <p class="reveal-up delay-1" style="font-size: 1.1em; color: var(--slate-300); margin-top: 16px;">
+      Готові обговорити деталі та відповісти на ваші запитання.
+    </p>
+    <div class="glow-line reveal-up delay-2" style="max-width: 300px; width: 100%;"></div>
+    <p class="reveal-up delay-3" style="font-size: 0.85em; color: var(--slate-500);">meet-ecosystem.com · info@meet-ecosystem.com</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2026 Meet Ecosystem · Конфіденційно</p>
+</footer>
+
+<script>
+  // ───── Intersection Observer for reveal animations ─────
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+
+  // ───── Scroll progress indicator ─────
+  const scrollIndicator = document.getElementById('scrollIndicator');
+
+  function updateScrollProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    scrollIndicator.style.width = progress + '%';
+  }
+
+  // ───── Nav shrink on scroll ─────
+  const nav = document.getElementById('mainNav');
+
+  function updateNav() {
+    if (window.scrollY > 80) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }
+
+  // ───── Navigation dots ─────
+  const sections = document.querySelectorAll('.section[data-nav]');
+  const navDotsContainer = document.getElementById('navDots');
+
+  sections.forEach((sec, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot';
+    dot.title = sec.dataset.nav;
+    dot.setAttribute('aria-label', sec.dataset.nav);
+    dot.addEventListener('click', () => {
+      sec.scrollIntoView({ behavior: 'smooth' });
+    });
+    navDotsContainer.appendChild(dot);
+  });
+
+  const dots = document.querySelectorAll('.nav-dot');
+
+  function updateActiveDot() {
+    let current = 0;
+    sections.forEach((sec, i) => {
+      const rect = sec.getBoundingClientRect();
+      if (rect.top <= window.innerHeight / 2) {
+        current = i;
+      }
+    });
+    dots.forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  // ───── Throttled scroll handler ─────
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        updateScrollProgress();
+        updateNav();
+        updateActiveDot();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  // Initial calls
+  updateScrollProgress();
+  updateNav();
+  updateActiveDot();
+</script>
+</body>
+</html>
